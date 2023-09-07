@@ -1,21 +1,22 @@
-﻿// Tarasov_Igor_.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿// Tarasov_Igor_.cpp : Этот файл содержит функцию "wmain". Здесь начинается и заканчивается выполнение программы.
 
-#include <iostream>
-#include <math.h>
-#include <list>
+#include <iostream> // no com
+#include <math.h> // no com
+#include <vector> // Что - то типо списков
+#include <io.h> // strin/out/err
+#include <fcntl.h> // _O_U16TEXT
 using namespace std;
+
+
 // https://ru.stackoverflow.com/questions/459154/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9-%D1%8F%D0%B7%D1%8B%D0%BA-%D0%B2-%D0%BA%D0%BE%D0%BD%D1%81%D0%BE%D0%BB%D0%B8
 // Фик русского языка если не работает setlocale(LC_ALL,"rus")
-#include <io.h>
-#include <fcntl.h>
-
 void fix() { // позволяет юзать русские символы. Со стак овер флов
     _setmode(_fileno(stdout), _O_U16TEXT); // обычный выход
     _setmode(_fileno(stdin), _O_U16TEXT); // обычный вход
     _setmode(_fileno(stderr), _O_U16TEXT); // При ошибке
 }
 
+// Ввод чисел как в питончике :)
 double int_input(const wchar_t* text) {
     double x;
     wcout << text;
@@ -23,76 +24,80 @@ double int_input(const wchar_t* text) {
     return x;
 }
 
-void menu(const wchar_t* name_menu,list <void*> funcs, list < const wchar_t*> texts ) {
+//no com
+double gipot(double k1, double k2) {
+    return std::sqrt(k1 * k1 + k2 * k2);
+}
+
+// Главное меню, которое само пишет список всех заданий!
+void menu(vector<void(*)()> funcs, vector< const wchar_t*> name_func) {
 x:
     int egg;
-    wcout << L"Меню - Выбор" << name_menu << endl;
-    for (int x;)
-    wcin >> egg;
-
-}
-
-int wmain(int argc, wchar_t* argv[])
-{   
-    
-    while (true) {
-
+    wcout << L" Меню - Выбора задания " << endl;
+    for (int i = 0; i < name_func.size(); i++) {
+        wcout << i+1 << " - " << name_func[i] << endl;
     }
-    fix();
-    wcout << L"Unicode -- English -- Русский -- Ελληνικά -- Español." << endl;
-    s = int_input(L"Введите число:");
-    wcout << s;
-    return 0;
+    wcout << 99 << " - " << L"Выход" << endl;
+    wcout << L"Выберите задание:";
+    wcin >> egg;
+    if(egg == 99) {
+        exit;
+    }
+    else {
+        try
+        {   
+            system("cls");
+            funcs.at(egg-1)();
+            wcout << L" - - - END - - - " << endl;
+            goto x;
+        }
+        catch (const exception&)
+        {
+            goto x;
+        }
+    }
 }
 
-// Tarasov_i_a_inbo_14_23.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
-
-#include <iostream>
-#include <math.h>
-using namespace std;
-
+// DZ 1
 void Z1() {
-    cout << "TARASOV IGOR ALEKSEEVICH" << endl;
-    cout << "--- END ---" << endl;
+    wcout << L"Тарасов Игорь Алексеевич" << endl;
 }
 
 void Z2()
 {
     double a;
     double b;
-    cout << "Input A:";
-    cin >> a;
-    cout << "Input B:";
-    cin >> b;
-    cout << "+ | ";
-    cout << a + b << endl;
-    cout << "- | ";
-    cout << a - b << endl;
-    cout << "* | ";
-    cout << a * b << endl;
+    wcout << L"Input A:";
+    wcin >> a;
+    wcout << L"Input B:";
+    wcin >> b;
+    wcout << L"+ | ";
+    wcout << a + b << endl;
+    wcout << L"- | ";
+    wcout << a - b << endl;
+    wcout << L"* | ";
+    wcout << a * b << endl;
     if (a != 0 and b != 0) {
-        cout << "/ | ";
-        cout << a / b << endl;
+        wcout << L"/ | ";
+        wcout << a / b << endl;
     }
-    cout << "--- END ---";
 }
 
 void Z41() {
     double a;
     double b;
-    cout << "Input b:";
-    cin >> a;
-    cout << "Input c:";
-    cin >> b;
+    wcout << "Input b:";
+    wcin >> a;
+    wcout << "Input c:";
+    wcin >> b;
     if (b == 0) {
-        cout << "delenie na 0";
+        wcout << "delenie na 0";
     }
     else {
         b = -b;
         double x = a / b;
-        if (x == -0) { cout << "Net reshenia"; }
-        else { cout << x << endl; }
+        if (x == -0) { wcout << "Net reshenia"; }
+        else { wcout << x << endl; }
 
     }
 
@@ -101,104 +106,177 @@ void Z41() {
 void Z3() {
     double a;
     double b;
-    cout << "Input A:";
-    cin >> a;
-    cout << "Input B:";
-    cin >> b;
+    wcout << "Input A:";
+    wcin >> a;
+    wcout << "Input B:";
+    wcin >> b;
 
     b = -b;
     if (a != 0 and b != 0) {
         double x = a / b;
-        cout << x << endl;
+        wcout << x << endl;
     }
     else {
-        cout << "Delenie na 0" << endl;
+        wcout << "Delenie na 0" << endl;
     }
-    cout << "--- END ---";
 }
 
 void Z4() {
     double a, b, c, d, x1, x2; // Объявляем переменные с плавающей точкой.
 
-    cout << "Input a:"; // Вводим исходные данные
-    cin >> a;
+    wcout << "Input a:"; // Вводим исходные данные
+    wcin >> a;
     if (a == 0) {
 
         Z41();
         goto x;
 
     }
-    cout << "Input b:";
-    cin >> b;
-    cout << "Input c:";
-    cin >> c;
+    wcout << "Input b:";
+    wcin >> b;
+    wcout << "Input c:";
+    wcin >> c;
 
     d = b * b - 4 * a * c; // Рассчитываем дискриминант
     if (d > 0) // Условие при дискриминанте больше нуля
     {
         x1 = ((-b) + sqrt(d)) / (2 * a);
         x2 = ((-b) - sqrt(d)) / (2 * a);
-        cout << "x1 = " << x1 << "\n";
-        cout << "x2 = " << x2 << "\n";
+        wcout << "x1 = " << x1 << "\n";
+        wcout << "x2 = " << x2 << "\n";
     }
     if (d == 0) // Условие для дискриминанта равного нулю
     {
         x1 = -(b / (2 * a));
         if (x1 == -0) {
-            cout << "Error x1 = -0 :(" << endl;
+            wcout << "Error x1 = -0 :(" << endl;
             goto x;
         }
-        cout << "x1 = x2 = " << x1 << "\n";
+        wcout << "x1 = x2 = " << x1 << "\n";
     }
     if (d < 0) // Условие при дискриминанте меньше нуля
-        cout << "D < 0, Sqrt not exist";
+        wcout << "D < 0, Sqrt not exist";
 x:
-    cout << "--- END ---" << endl;
+    int x;
 }
 
 void Z5() {
     bool a, b, c; //деньночь,шторы,лампа
-    cout << "Sytki:";
-    cin >> a;
-    cout << "Shtori:";
-    cin >> b;
-    cout << "Lampa:";
-    cin >> c;
+    wcout << L"Сутки:";
+    wcin >> a;
+    wcout << L"Шторы:";
+    wcin >> b;
+    wcout << L"Лампа:";
+    wcin >> c;
     if (c == true or (a == true and b == true)) {
-        cout << "Light" << endl;
+        wcout << L"Светло" << endl;
     }
     else {
-        cout << "Dark" << endl;
+        wcout << L"Темно" << endl;
     }
-    cout << "--- END ---";
+    wcout << "--- END ---";
+}
+// END DZ 1
+
+// DZ 2
+
+void Z6() {
+    bool inv = false;
+    double R = 0.0, r = 0.0, V = 0.0, h = 0.0;
+    R = int_input(L"Введите 1-ый радиус:");
+    r = int_input(L"Введите 2-ой радиус:");
+    h = int_input(L"Введите Высоту:");
+    float S = 0, Pi = 3.14;
+    float l = gipot((R - r), h);
+    if ((R <= 0 or r <= 0) and inv == true) {
+        wcout << L"Ошибка: Один из радиусов меньше или ровен 0" << endl;
+        goto end;
+    }
+
+    S = Pi * ((l*R)+(l*r)+(R*R)+(r*r));
+    V = (Pi * ((R * R) + (r * r) + (R * r)) * h)/3;
+    wcout << L"Площадь - " << S << L" см2" << endl;
+    wcout << L"Обьём - " << V << L" см3" << endl;
+end:
+    int s;
 }
 
-int main()
-{
-    while (true)
-    {
-        int z;
-        cout << "Spisok Zadaniy\n";
-        cout << "0 - exit\n1 - Name\n2 - Arifmetica\n3 - Urovnenie\n4 - More Urovnenie\n5 - kvartira" << endl;
-        cout << "Vibor zadaniya:";
-        cin >> z;
-        if (z == 0) { exit; }
-        if (z == 1) {
-            Z1();
-        }
-        if (z == 2) {
-            Z2();
-        }
-        if (z == 3) {
-            Z3();
-        }
-        if (z == 4) {
-            Z4();
-        }
-        if (z == 5) {
-            Z5();
-        }
+void Z7() {
+    double w, a, x;
+    a = int_input(L"Введите a:");
+    x = int_input(L"Введите x:");
+    if (a == 0 or x == 0) {
+        wcout << L"Ошибка: Одна из переменных ровна 0" << endl;
+        goto err;
     }
+    if (abs(x) >= 1) {
+        if ((x * x) >= a) {
+            wcout << L"Ошибка: x слишком большой, или a слишком маленькая." << endl; goto err;
+        }
+        w = sqrt(a - (x * x));
+    }
+    else {
+        w = a * log10(abs(x));
+    }
+    wcout << L"w = " << w << endl;
+err:
+    int s;
 }
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
+
+void Z8() {
+    double x, y, b, z=0;
+    x = int_input(L"Введите x:");
+    y = int_input(L"Введите y:");
+    b = int_input(L"Введите b:");
+    if ((b - y<=0)) {
+        wcout << L"Ошибка: log не принимает на вход 0, измените переменную y или b." << endl; goto err;
+    }
+    z = log10(b - y) * sqrt(b - x);
+    wcout << L"z = " << z << endl;
+err:
+    int s;
+}
+
+void Z9() {
+    int x;
+    x = int_input(L"Введите x:");
+    for (int i = x; i <= x + 10; i++) {
+        wcout << i << endl;
+    }
+err:
+    int s;
+}
+// А потому что в 16 ричной системе исчесления это 10, а Z - задание, я знаю что считаю не с нуля...
+void ZA() {
+    double y;
+    wcout.width(10);
+    wcout << "x" << " | " << "y" << endl;
+    for (float x = -4; x <= 4; x += 0.5) {
+        if (x == 1) {
+            wcout.width(10);
+            wcout << x << " | " << L"Деление на 0" << endl;
+        }
+        else{
+            y = ((x * x) - (2 * x) + 2) / (x - 1);
+            wcout.width(10);
+            wcout << x << " | " << y << endl;
+        }
+       
+        //wcout << L"x = " << x << L" \t| y = " << y << endl;
+    }
+err:
+    int s;
+}
+
+// END DZ 2
+
+int wmain(int argc, wchar_t* argv[])
+{   
+    fix();
+
+    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA};
+    vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция"};
+    menu(funcs, name_func);
+    
+    return 0;
+}
