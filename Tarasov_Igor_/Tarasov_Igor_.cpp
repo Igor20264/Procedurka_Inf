@@ -270,10 +270,31 @@ err:
 
 // END DZ 2
 
+
+// DZ 3
+
+void ZB() {
+    double S, n, p, r, m;
+    S = int_input(L"Введите занимаемую сумму S:");
+    p = int_input(L"Введите % p:");
+    n = int_input(L"Введите колл-во лет n:");
+
+    if (p > 0 and S > 0 and n > 0) {
+        r = p / 100;
+        m = (S * r*(pow((1+r),n)))/(12*(pow((1+r),n)-1));
+        wcout << m;
+    }
+    else{
+        wcout << L"Ошибка ..<0";
+    }
+
+}
+
+// END DZ 3
 int wmain(int argc, wchar_t* argv[])
 {   
     fix();
-
+    ZB();
     vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA};
     vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция"};
     menu(funcs, name_func);
