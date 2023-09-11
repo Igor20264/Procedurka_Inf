@@ -8,6 +8,10 @@
 #include <fstream> // Чтение файла
 #include <sstream> 
 #include <string> 
+
+#include <iomanip>
+#include <string>     // для getline
+#include <fstream>// Запись чтение файлов
 using namespace std;
 
 // https://metanit.com/cpp/tutorial/7.4.php
@@ -26,6 +30,7 @@ double int_input(const wchar_t* text) {
     wcin >> x;
     return x;
 }
+
 
 //no com
 double gipot(double k1, double k2) {
@@ -403,6 +408,160 @@ void ZF() {
 }
 
 // END DZ 3
+
+// DZ 4
+
+void ZA1() {
+    ofstream out;
+    out.open("zadanie1.txt");
+
+    if (out.is_open()) {
+        int data;
+        for (int i = 0; i < 10; i++) {
+            cout << "| Осталось "<< 9-i <<" |\t " << "Введите число для записи в файл:";
+            cin >> data;
+            out << data << endl;
+        }
+    }
+    else {
+        cout << "ERROR WRITE FILE" << endl;
+    }
+    out.close();
+
+    string line;
+    ifstream in;
+    long int sum_m = 0;
+    double temp;
+    in.open("zadanie1.txt");
+    if (in.is_open()) {
+        while (getline(in, line)) {
+            temp = atof(line.c_str());
+            sum_m += temp;
+        }
+        cout << "Сумма чисел в файле = " << sum_m << endl;
+    }
+}
+
+char sigx(double x) {
+    if (x == 0) {
+        return '0';
+    }
+    else {
+        if (x > 0) {
+            return '+';
+        }
+        else {
+            return '-';
+        }
+    }
+}
+
+void ZA2() {
+    double x = int_input(L"Введите число:");
+    cout << "Знак числа = " << sigx(x) << endl;
+}
+
+float S_rectangle(float x,float y) {//Прямоугольник
+    float Pi = 3.14;
+    return x*y;
+}
+
+float S_triangle(float x, float y) {//Треугольник
+    float Pi = 3.14;
+    return (x * y)/2;
+}
+
+float S_circle(float r) {//Прямоугольник
+    float Pi = 3.14;
+    return Pi*(r*r);
+}
+
+void ZA3() {
+    double x1, y1, x2, y2, r;
+    x1 = int_input(L"Введите Ширину Прямоугольника:");
+    y1 = int_input(L"Введите Высоту Прямоугольника:");
+    y2 = int_input(L"Введите Ширину Основания Треугольника:");
+    x2 = int_input(L"Введите Высоту Треугольника:");
+    r = int_input(L"Введите Радиус круга:");
+    if (x1 <= 0 or y1 <= 0) {
+        cout << "Ошибка. Введен размер x < 0 или y < 0." << endl;
+    }
+    else {
+        cout << "Площадь прямоугольника. S = " << S_rectangle(x1, x2)<<endl;
+    }
+    if (x2 <= 0 or y2 <= 0) {
+        cout << "Ошибка. Введен размер x < 0 или y < 0." << endl;
+    }
+    else {
+        cout << "Площадь Треугольника. S = " << S_triangle(x1, x2) << endl;
+    }
+    if (r <= 0) {
+        cout << "Ошибка. Введен радиус <= 0." << endl;
+    }
+    else {
+        cout << "Площадь круга. S = " << S_circle(r) << endl;
+    }
+}
+
+void ZA4() {
+    string data;
+    cout << "RU/US:";
+    cin >> data;
+    if (data == "US") {
+        for (int i = 0; i < 13; ++i)
+        {
+            if (i < 7) {
+                if (0 == i % 2) {
+                    for (int j = 0; j < 7; ++j)
+                    {
+                        cout << "\x1B[44m" << "  *" << "\033[0m";
+                    }
+                    cout << "\x1B[41m\x1B[31m" <<  setw(51) << "\033[0m";
+                }
+                else {
+                    cout << "\x1B[44m" << " " << "\033[0m";
+                    for (int j = 0; j < 7; ++j)
+                        if (j == 6) {
+                            cout << "\x1B[44m" << "* " << "\033[0m";
+                        }
+                        else {
+                            cout << "\x1B[44m" << "*  " << "\033[0m";
+                        }
+                    cout << "\x1B[47m\x1B[37m" << setw(51) << "\033[0m";
+                        
+                }
+                
+                std::cout << '\n';
+            }
+
+        }
+
+        for (int i = 0; i < 18; ++i)
+            if (0 == i % 2)
+                cout << "\x1B[47m\x1B[37m" << setw(72) << setfill(' ') << "\033[0m" << '\n';
+            else
+                cout <<  "\x1B[41m\x1B[31m"  << setw(72) << setfill('/') << "\033[0m" << '\n';
+
+    }
+    else {
+        for (int i=0; i < 3; i++) {
+            cout <<"\x1B[47m\x1B[37m" << setw(72) << setfill('_') << "\033[0m" << '\n';
+        }
+        for (int i=0; i < 3; i++) {
+            cout << "\x1B[44m\x1B[34m" << setw(72) << setfill('_') << "\033[0m" << '\n';
+        }
+        for (int i=0; i < 3; i++) {
+            cout << "\x1B[41m\x1B[31m" << setw(72) << setfill('_') <<"\033[0m" << '\n';
+        }
+    }
+
+    
+}
+
+void ZA5() {
+    0;
+}
+// END DZ 4
 int wmain(int argc, wchar_t* argv[])
 {   
     //fix();
