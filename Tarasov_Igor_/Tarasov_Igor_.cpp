@@ -5,6 +5,9 @@
 #include <vector> // Что - то типо списков
 #include <io.h> // strin/out/err
 #include <fcntl.h> // _O_U16TEXT
+#include <fstream> // Чтение файла
+#include <sstream> 
+#include <string> 
 using namespace std;
 
 // https://metanit.com/cpp/tutorial/7.4.php
@@ -181,14 +184,14 @@ void Z5() {
 // DZ 2
 
 void Z6() {
-    bool inv = false;
     double R = 0.0, r = 0.0, V = 0.0, h = 0.0;
     R = int_input(L"Введите 1-ый радиус:");
     r = int_input(L"Введите 2-ой радиус:");
     h = int_input(L"Введите Высоту:");
     float S = 0, Pi = 3.14;
     float l = gipot((R - r), h);
-    if ((R <= 0 or r <= 0) and inv == true) {
+
+    if ((R <= 0 or r <= 0) and (h<=0)) {
         wcout << L"Ошибка: Один из радиусов меньше или ровен 0" << endl;
         goto end;
     }
@@ -198,7 +201,7 @@ void Z6() {
     wcout << L"Площадь - " << S << L" см2" << endl;
     wcout << L"Обьём - " << V << L" см3" << endl;
 end:
-    int s;
+    0;
 }
 
 void Z7() {
@@ -220,7 +223,7 @@ void Z7() {
     }
     wcout << L"w = " << w << endl;
 err:
-    int s;
+    0;
 }
 
 void Z8() {
@@ -234,7 +237,7 @@ void Z8() {
     z = log10(b - y) * sqrt(b - x);
     wcout << L"z = " << z << endl;
 err:
-    int s;
+    0;
 }
 
 void Z9() {
@@ -244,7 +247,7 @@ void Z9() {
         wcout << i << endl;
     }
 err:
-    int s;
+    0;
 }
 // А потому что в 16 ричной системе исчесления это 10, а Z - задание, я знаю что считаю не с нуля...
 void ZA() {
@@ -265,7 +268,7 @@ void ZA() {
         //wcout << L"x = " << x << L" \t| y = " << y << endl;
     }
 err:
-    int s;
+    0;
 }
 
 // END DZ 2
@@ -276,27 +279,137 @@ err:
 void ZB() {
     double S, n, p, r, m;
     S = int_input(L"Введите занимаемую сумму S:");
-    p = int_input(L"Введите % p:");
     n = int_input(L"Введите колл-во лет n:");
+    p = int_input(L"Введите % p:");
+    
 
     if (p > 0 and S > 0 and n > 0) {
         r = p / 100;
         m = (S * r*(pow((1+r),n)))/(12*(pow((1+r),n)-1));
-        wcout << m;
+        wcout << m << L"Руб. Месячная выплата" << endl;
     }
     else{
         wcout << L"Ошибка ..<0";
     }
+    0;
+}
 
+double func(double sum, double month, int year)
+{
+    double percent;
+
+    percent = ((12 * month - 1) / sum) * 100;
+
+    if (percent > 100)
+    {
+        cout << "Процент не может быть более 100 %" << endl;
+        exit(0);
+    }
+    else
+        return percent;
+}
+
+void ZC() {
+    int S, m, n;
+    double p, r, m1;
+    m1 = 0;
+    cout << "Введите сумму кредита: ";
+    cin >> S;
+    cout << "Введите размер месячной выплаты: ";
+    cin >> m;
+    cout << "Введите кол-во лет: ";
+    cin >> n;
+ 
+    for (p = 1; m1 < m; p++)
+    {
+        r = p / 1200;
+        m1 = S * (r + (r / (pow((1 + r), n) - 1)));
+        if (m1 > m) {
+            cout << "Кредит давался под " << p << "%" << endl;
+        }
+    }
+
+}
+
+void ZD() {
+    ifstream fin;
+    fin.open("C:\\Users\\Admin\\source\\repos\\Igor20264\\Tarasov_Igor\\Tarasov_Igor_\\read.txt");
+    if (fin.is_open()) {
+        char buff[1024];
+        x:
+        fin >> buff;
+        cout << buff << endl; // напечатали слово
+        if (strlen(buff) != 0) {
+            goto x;
+        }
+        fin.close();
+    }
+    else {
+        cout << "Error" << endl;
+    }
+    0;
+}
+
+void ZE() {
+    ifstream fin;
+    fin.open("C:\\Users\\Admin\\source\\repos\\Igor20264\\Tarasov_Igor\\Tarasov_Igor_\\read.txt");
+    if (fin.is_open()) {
+        char buff[1024];
+    x:
+        fin >> buff;
+        for (int i = 0; i < strlen(buff); i++) {
+            cout << int(buff[i]) << " " << buff[i] << endl;
+            if (48 <= buff[i] and buff[i] <= 57) {
+                cout << buff[i] << endl;
+            }
+        }
+        if (strlen(buff) != 0) {
+            goto x;
+        }
+        fin.close();
+    }
+    else {
+        cout << "Error" << endl;
+    }
+    0;
+}
+
+void ZF() {
+    int sizeArray;
+    char temp;
+    string alfavit = "wpMQqlLXoSWgVijBHDzkeOusYICtEK";//30
+    //string alfavit = "wpMQqlXoSWgVijGfmZUcbvryTaRPFdAnJLBHDzkeOuhNsxYICtEK";//52
+    bool s=false;
+    //wcout << "Введите Строку: " << endl; cin >> alfavit;
+    alfavit.erase(remove_if(alfavit.begin(), alfavit.end(), std::isspace), alfavit.end());
+    sizeArray = alfavit.length();
+    cout << sizeArray << " Букв в сортировке." << endl;
+    cout << "ДО  \t|" << alfavit << "\nПОСЛЕ\t|";
+    for (int i = 1; i < sizeArray; i++)
+        for (int j = 0; j < sizeArray - i; j++)
+        {
+            if (alfavit[j + 1] > alfavit[j])
+            {
+                temp = alfavit[j];
+                alfavit[j] = alfavit[j + 1];
+                alfavit[j + 1] = temp;
+            }
+        }
+
+    for (int i = sizeArray - 1; i >= 0; i--)
+        wcout << alfavit[i]; // вывод
+    cout << endl;
+    0;
 }
 
 // END DZ 3
 int wmain(int argc, wchar_t* argv[])
 {   
-    fix();
-    ZB();
-    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA};
-    vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция"};
+    //fix();
+    setlocale(LC_ALL, "RUSSIAN");
+
+    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF};
+    vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция",L"Заем",L"Ссуда",L"Копирование файла",L"Фильтр",L"Сортировка букв"};
     menu(funcs, name_func);
     
     return 0;
