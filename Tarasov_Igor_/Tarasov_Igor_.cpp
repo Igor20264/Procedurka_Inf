@@ -212,7 +212,7 @@ end:
 void Z7() {
     double w, a, x;
     a = int_input(L"Введите a:");
-    x = int_input(L"Введите x:");
+    x = int_input(L"Введите x < 1:");
     if (a == 0 or x == 0) {
         wcout << L"Ошибка: Одна из переменных ровна 0" << endl;
         goto err;
@@ -557,8 +557,163 @@ void ZA4() {
 
     
 }
-
+// Не хватает знанией для выполнения работы :
 void ZA5() {
+    0;
+}
+
+void ZA6() {
+    string data;
+    cout << "Введите число в римской системе исчесления: ";
+    cin >> data;
+    char err[100];
+    int chetdef = 0;
+    int chetchik = 0;
+    for (int i = 0; i <= data.size() - 1; i++) {
+            switch (data[i]) {
+            case 'I':
+                if (i + 1 < data.size() && (data[i + 1] == 'V' || data[i + 1] == 'X' || data[i + 1] == 'C')) {
+                    chetchik = chetchik - 1;
+                }
+                else chetchik = chetchik + 1;
+                break;
+
+            case 'V':
+                chetchik = chetchik + 5;
+                break;
+
+            case 'X':
+                if (i + 1 < data.size() && (data[i + 1] == 'L' || data[i + 1] == 'C' || data[i + 1] == 'M')) {
+                    chetchik = chetchik - 10;
+                }
+                else chetchik = chetchik + 10;
+                break;
+
+            case 'L':
+                chetchik = chetchik + 50;
+                break;
+
+            case 'C':
+                if (i + 1 < data.size() && (data[i + 1] == 'D' || data[i + 1] == 'M')) {
+                    chetchik = chetchik - 100;
+                }
+                else chetchik = chetchik + 100;
+                break;
+
+            case 'D':
+                chetchik = chetchik + 500;
+                break;
+
+            case 'M':
+                chetchik = chetchik + 1000;
+                break;
+
+            default: err[chetdef] = data[i]; chetdef++;
+                break;
+            }
+        }
+        cout << endl;
+        if (chetchik == 0) {
+            cout << "Вы не ввели число для перевода" << endl;
+        }
+        else {
+            cout << "В 10-тичной системе исчесления: " << chetchik << endl;
+    }
+    
+}
+int gen(int m, int b, int c ,long long int n) {
+    int s = 0;
+    for (int i = 1; i <= n; i++) {
+        s = (m * s + b) % c;
+    }
+    return s;
+}
+void ZA7 () {
+    int mode;
+    mode = int_input(L"Укажите вариант. [1/2]:");
+    if (mode == 1) {
+        for (int i = 1; i < 10; i++) {
+            cout << gen(37, 3, 64, i) << endl;
+        }
+    }
+    else {
+        for (int i = 1; i < 10; i++) {
+            cout << gen(25173, 13849, 65537, i) << endl;
+        }
+    }
+}
+
+void ZA8() {
+    double A[3][4] = {{5,2,0,10},{3,5,2, 5},{20,0,0,0}};
+    double B[4][2] = {{1.20,0.50},{2.80,0.40},{5,1},{2,1.5}};
+    double C[3][2];
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 2; j++) {
+            C[i][j] = 0;
+            for (int k = 0; k < 4; k++)
+                C[i][j] += A[i][k] * B[k][j];   
+        }
+    }
+
+    // Деньги
+    int maxSeller = 0;
+    int minSeller = 0;
+    double maxMoney = 0;
+    double minMoney = 10000000;
+    for (int x = 0; x < 3; x++) {
+        if (C[x][0] > maxMoney) {
+            maxSeller = x + 1;
+            maxMoney = C[x][0];
+        }
+        if (C[x][0] < minMoney) {
+            minSeller = x + 1;
+            minMoney = C[x][0];
+        }
+    }
+    cout << "Продавец " << maxSeller << " С максимальной суммой:\t" << maxMoney << endl;
+    cout << "Продавец " << minSeller << " С минимальной суммой:\t" << minMoney << endl;
+
+    // Комиссионные
+    maxSeller = 0;
+    minSeller = 0;
+    double maxComss = 0;
+    double minComss = 10000000;
+    for (int x = 0; x < 3; x++) {
+        if (C[x][1] > maxComss) {
+            maxSeller = x + 1;
+            maxComss = C[x][1];
+        }
+        if (C[x][1] < minComss) {
+            minSeller = x + 1;
+            minComss = C[x][1];
+        }
+    }
+    cout << "Продавец " << maxSeller << " С максимальной коммисией:\t" << maxComss << endl;
+    cout << "Продавец " << minSeller << " С минимальной коммисией:\t" << minComss << endl;
+
+    // Общая сумма денег
+    double sumMoney = 0;
+    for (int x = 0; x < 3; x++) {
+        sumMoney += C[x][0];
+    }
+    cout << "Всего денег = " << sumMoney << endl;
+
+    // Общая сумма комиссионных
+    double sumComss = 0;
+    for (int x = 0; x < 3; x++) {
+        sumComss += C[x][1];
+    }
+    cout << "Всего комиссионных = " << sumComss << endl;
+
+    // Общая сумма денег (+ комиссионные)
+    double SumMoneyResult = 0;
+    for (int x = 0; x < 3; x++) {
+        SumMoneyResult += C[x][0] + C[x][1];
+    }
+    cout << "Общая сумма денег (+ комиссионные) = " << SumMoneyResult << endl;
+}
+
+void ZA9() {
     0;
 }
 // END DZ 4
@@ -566,9 +721,8 @@ int wmain(int argc, wchar_t* argv[])
 {   
     //fix();
     setlocale(LC_ALL, "RUSSIAN");
-
-    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF};
-    vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция",L"Заем",L"Ссуда",L"Копирование файла",L"Фильтр",L"Сортировка букв"};
+    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8};
+    vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция",L"Заем",L"Ссуда",L"Копирование файла",L"Фильтр",L"Сортировка букв",L"Файл",L"Знак числа",L"Геометрические фигуры",L"Былая слава (Осуждаю !!!)",L"Синусоида",L"Автоматный распознаватель",L"Генератор псевдослучайных чисел",L"Умножение матриц"};
     menu(funcs, name_func);
     
     return 0;
