@@ -8,7 +8,7 @@
 #include <fstream> // Чтение файла
 #include <sstream> 
 #include <string> 
-
+#include <algorithm>
 #include <iomanip>
 #include <string>     // для getline
 #include <fstream>// Запись чтение файлов
@@ -327,8 +327,8 @@ void ZC() {
  
     for (p = 1; m1 < m; p++)
     {
-        r = p / 1200;
-        m1 = S * (r + (r / (pow((1 + r), n) - 1)));
+        r = p / 100;
+        m1 = S * (r + (r / 12*(pow((1 + r), n) - 1)))/2;
         if (m1 > m) {
             cout << "Кредит давался под " << p << "%" << endl;
         }
@@ -383,6 +383,8 @@ void ZF() {
     int sizeArray;
     char temp;
     string alfavit = "wpMQqlLXoSWgVijBHDzkeOusYICtEK";//30
+    //sort(alfavit.begin(), alfavit.end());
+    //cout << alfavit;
     //string alfavit = "wpMQqlXoSWgVijGfmZUcbvryTaRPFdAnJLBHDzkeOuhNsxYICtEK";//52
     bool s=false;
     //wcout << "Введите Строку: " << endl; cin >> alfavit;
@@ -716,10 +718,84 @@ void ZA8() {
 void ZA9() {
     0;
 }
+
+int n_to_ten(char data) {
+    string base = "0123456789ABCDFEGH";
+    for (int i = 0; i < base.size(); i++) {
+        if (data == base[i]) {
+            return i;
+        }
+    }
+
+}
+
+void ZA9() {
+    string data;
+    int all=0;
+    int osnov_old=10,osnov_nev;
+
+    cout << "Введите исходное число: ";
+    cin >> data;
+    cout << "Введите исходное основание (число): ";
+    cin >> osnov_old;
+    cout << "Введите новое основание (число): ";
+    cin >> osnov_nev;
+    for (int i = 0; i < data.size(); i++) {
+        all += n_to_ten(data[data.size() - 1 - i]) * int(pow(osnov_old, i));
+    }
+
+    string l;
+    int i = 0;
+    while (all > osnov_nev) {
+       // cout << all % osnov_nev << endl;
+        l += to_string(all % osnov_nev);
+        all = all/osnov_nev;
+        i++;
+    }
+    if (all == osnov_nev) {
+        l += '0';
+        l += '1';
+    }
+    reverse(l.begin(), l.end());
+    cout << " - " << l;
+}
+
 // END DZ 4
-int wmain(int argc, wchar_t* argv[])
+
+// DZ 5
+int gcn(int a, int b) {
+    if (b == 0)
+        return a;
+    return gcn(b, a % b);
+}
+
+int gcd(int x, int y) {
+    while (x != y) {
+        if (x > y) {
+            x = x - y;
+        }
+        else {
+            y = y - x;
+        }
+    }
+    return x;
+}
+
+void ZAA() {
+    double x, y;
+    x = int_input(L"Введите первое число:");
+    y = int_input(L"Введите второе число:");
+    cout << gcd(x, y) << " или " << gcn(x, y) << endl;  
+}
+
+void ZAB() {
+
+}
+// END DZ 5
+
+int main(int argc, wchar_t* argv[])
 {   
-    //fix();
+    //fix()
     setlocale(LC_ALL, "RUSSIAN");
     vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8};
     vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция",L"Заем",L"Ссуда",L"Копирование файла",L"Фильтр",L"Сортировка букв",L"Файл",L"Знак числа",L"Геометрические фигуры",L"Былая слава (Осуждаю !!!)",L"Синусоида",L"Автоматный распознаватель",L"Генератор псевдослучайных чисел",L"Умножение матриц"};
