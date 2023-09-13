@@ -715,10 +715,6 @@ void ZA8() {
     cout << "Общая сумма денег (+ комиссионные) = " << SumMoneyResult << endl;
 }
 
-void ZA9() {
-    0;
-}
-
 int n_to_ten(char data) {
     string base = "0123456789ABCDFEGH";
     for (int i = 0; i < base.size(); i++) {
