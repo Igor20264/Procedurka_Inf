@@ -367,6 +367,7 @@ string Read_File(string filePath,char separation) {
     if (infile.is_open()) {
         string str(std::istreambuf_iterator<char>{infile}, {});
         cout << str;
+        infile.close();
     }
     else {
         cout << "Ошибка. Файл не открыт" << endl;
@@ -377,14 +378,25 @@ error:
     return "error";
 }
 
-bool Write_file(string filePath, char data) {
+bool Write_file(string filePath, string data) {
+    ofstream outfile;
+    outfile.open(filePath);
+    if (outfile.is_open()) {
+        outfile << data;
+        outfile.close();
+    }
+    else {
+        cout << "Ошибка. Файл не открыт" << endl;
+        goto error;
+    }
     return 1;
 error:
     return 0;
 }
 
 void ZD() {
-    Read_File("base.hleb", '\n');
+    //Write_file("base.hleb", "Ya ebu sobak?\nNO\n\Yes\nNO");
+    Read_File("read.txt", '\n');
 }
 
 void ZE() {
