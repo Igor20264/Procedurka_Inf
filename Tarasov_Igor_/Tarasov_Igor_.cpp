@@ -195,7 +195,10 @@ void Z6() {
     h = int_input(L"Введите Высоту:");
     float S = 0, Pi = 3.14;
     float l = gipot((R - r), h);
-
+    if (r == R) {
+        cout << "Ошибка: Радиусы равны, Это цилиндр" << endl;
+        goto end;
+    }
     if ((R <= 0 or r <= 0) and (h<=0)) {
         wcout << L"Ошибка: Один из радиусов меньше или ровен 0" << endl;
         goto end;
@@ -209,7 +212,13 @@ end:
     0;
 }
 
-void Z7() {
+void Z7()
+
+
+
+
+
+{
     double w, a, x;
     a = int_input(L"Введите a:");
     x = int_input(L"Введите x < 1:");
@@ -246,11 +255,26 @@ err:
 }
 
 void Z9() {
-    int x;
-    x = int_input(L"Введите x:");
-    for (int i = x; i <= x + 10; i++) {
-        wcout << i << endl;
+    string x;
+    bool okey = true;
+    cout << "Введите x:";
+    cin >> x;
+    for (int i = 0; i <= x.size(); i++) {
+        if (57 <= int(x[i]) or int(x[i]) <= 48) {
+            cout << "Ошибка. Вы ввели число с точкой или буквой ";
+            okey = false;
+            break;
+        }
     }
+    if (okey == true) {
+        int temp_x;
+        temp_x = stoi(x);
+
+        for (int i = temp_x; i <= temp_x + 10; i++) {
+            wcout << i << endl;
+        }
+    }
+
 err:
     0;
 }
@@ -336,28 +360,36 @@ void ZC() {
 
 }
 
-void ZD() {
-    ifstream fin;
-    fin.open("C:\\Users\\Admin\\source\\repos\\Igor20264\\Tarasov_Igor\\Tarasov_Igor_\\read.txt");
-    if (fin.is_open()) {
-        char buff[1024];
-        x:
-        fin >> buff;
-        cout << buff << endl; // напечатали слово
-        if (strlen(buff) != 0) {
-            goto x;
-        }
-        fin.close();
+string Read_File(string filePath,char separation) {
+    ifstream infile;
+    string str;
+    infile.open(filePath);
+    if (infile.is_open()) {
+        string str(std::istreambuf_iterator<char>{infile}, {});
+        cout << str;
     }
     else {
-        cout << "Error" << endl;
+        cout << "Ошибка. Файл не открыт" << endl;
+        goto error;
     }
-    0;
+    return str;
+error:
+    return "error";
+}
+
+bool Write_file(string filePath, char data) {
+    return 1;
+error:
+    return 0;
+}
+
+void ZD() {
+    Read_File("base.hleb", '\n');
 }
 
 void ZE() {
     ifstream fin;
-    fin.open("C:\\Users\\Admin\\source\\repos\\Igor20264\\Tarasov_Igor\\Tarasov_Igor_\\read.txt");
+    fin.open("C:\\Users\\Admin\\source\\repos\\Tarasov_Igor_\\Tarasov_Igor_\\read.txt");
     if (fin.is_open()) {
         char buff[1024];
     x:
@@ -793,8 +825,8 @@ int main(int argc, wchar_t* argv[])
 {   
     //fix()
     setlocale(LC_ALL, "RUSSIAN");
-    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8};
-    vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция",L"Заем",L"Ссуда",L"Копирование файла",L"Фильтр",L"Сортировка букв",L"Файл",L"Знак числа",L"Геометрические фигуры",L"Былая слава (Осуждаю !!!)",L"Синусоида",L"Автоматный распознаватель",L"Генератор псевдослучайных чисел",L"Умножение матриц"};
+    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8,ZA9};
+    vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция",L"Заем",L"Ссуда",L"Копирование файла",L"Фильтр",L"Сортировка букв",L"Файл",L"Знак числа",L"Геометрические фигуры",L"Былая слава (Осуждаю !!!)",L"Синусоида",L"Автоматный распознаватель",L"Генератор псевдослучайных чисел",L"Умножение матриц",L"Системы счисления"};
     menu(funcs, name_func);
     
     return 0;
