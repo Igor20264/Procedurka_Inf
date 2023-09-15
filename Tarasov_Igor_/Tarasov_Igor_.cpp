@@ -31,6 +31,9 @@ double int_input(const wchar_t* text) {
     return x;
 }
 
+int gg() {
+    cout << "You Win"
+}
 
 //no com
 double gipot(double k1, double k2) {
@@ -302,7 +305,6 @@ err:
 
 // END DZ 2
 
-
 // DZ 3
 
 void ZB() {
@@ -366,8 +368,8 @@ string Read_File(string filePath,char separation) {
     infile.open(filePath);
     if (infile.is_open()) {
         string str(std::istreambuf_iterator<char>{infile}, {});
-        cout << str;
         infile.close();
+        return str;
     }
     else {
         cout << "Ошибка. Файл не открыт" << endl;
@@ -395,8 +397,15 @@ error:
 }
 
 void ZD() {
-    //Write_file("base.hleb", "Ya ebu sobak?\nNO\n\Yes\nNO");
-    Read_File("read.txt", '\n');
+    string data;
+    cin >> data;
+    Write_file("base.hleb",data);
+    data = Read_File("base.hleb", '\n');
+    cout << data<<endl;
+    Write_file("While", data+"Dora_dora");
+    data = Read_File("While", '\n');
+    cout << data << endl;
+
 }
 
 void ZE() {
