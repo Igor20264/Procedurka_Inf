@@ -14,10 +14,18 @@
 #include <fstream>// Запись чтение файлов
 using namespace std;
 
-// https://metanit.com/cpp/tutorial/7.4.php
-// https://ru.stackoverflow.com/questions/459154/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9-%D1%8F%D0%B7%D1%8B%D0%BA-%D0%B2-%D0%BA%D0%BE%D0%BD%D1%81%D0%BE%D0%BB%D0%B8
-// Фик русского языка если не работает setlocale(LC_ALL,"rus")
-void fix() { // позволяет юзать русские символы. Со стак овер флов
+const double pi = 3.14;
+
+
+/*
+https://metanit.com/cpp/tutorial/7.4.php
+https://ru.stackoverflow.com/questions/459154/%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9-%D1%8F%D0%B7%D1%8B%D0%BA-%D0%B2-%D0%BA%D0%BE%D0%BD%D1%81%D0%BE%D0%BB%D0%B8
+Фик русского языка если не работает setlocale(LC_ALL,"rus")
+позволяет использовать русские символы.
+
+Фиксит пробелму при помощи расширения вывода
+*/
+void fix() {
     _setmode(_fileno(stdout), _O_U16TEXT); // обычный выход
     _setmode(_fileno(stdin), _O_U16TEXT); // обычный вход
     _setmode(_fileno(stderr), _O_U16TEXT); // При ошибке
@@ -31,9 +39,6 @@ double int_input(const wchar_t* text) {
     return x;
 }
 
-int gg() {
-    cout << "You Win"
-}
 
 //no com
 double gipot(double k1, double k2) {
@@ -59,7 +64,7 @@ x:
         {   
             system("cls");
             funcs.at(egg-1)();
-            wcout << L" - - - END - - - " << endl;
+            cout << endl << " - - - - END - - - - " << endl;
             goto x;
         }
         catch (const exception&)
@@ -196,7 +201,7 @@ void Z6() {
     R = int_input(L"Введите 1-ый радиус:");
     r = int_input(L"Введите 2-ой радиус:");
     h = int_input(L"Введите Высоту:");
-    float S = 0, Pi = 3.14;
+    float S = 0;
     float l = gipot((R - r), h);
     if (r == R) {
         cout << "Ошибка: Радиусы равны, Это цилиндр" << endl;
@@ -207,8 +212,8 @@ void Z6() {
         goto end;
     }
 
-    S = Pi * ((l*R)+(l*r)+(R*R)+(r*r));
-    V = (Pi * ((R * R) + (r * r) + (R * r)) * h)/3;
+    S = pi * ((l*R)+(l*r)+(R*R)+(r*r));
+    V = (pi * ((R * R) + (r * r) + (R * r)) * h)/3;
     wcout << L"Площадь - " << S << L" см2" << endl;
     wcout << L"Обьём - " << V << L" см3" << endl;
 end:
@@ -362,7 +367,7 @@ void ZC() {
 
 }
 
-string Read_File(string filePath,char separation) {
+string Read_File(string filePath,char separation='\n') {
     ifstream infile;
     string str;
     infile.open(filePath);
@@ -399,39 +404,24 @@ error:
 void ZD() {
     string data;
     cin >> data;
+    cout << "1" << endl;
     Write_file("base.hleb",data);
-    data = Read_File("base.hleb", '\n');
-    cout << data<<endl;
-    Write_file("While", data+"Dora_dora");
-    data = Read_File("While", '\n');
-    cout << data << endl;
+    cout << Read_File("base.hleb", '\n') << endl;
+    cout << "2" << endl;
+    Write_file("base.txt", data+"Dora_dora");
+    cout << Read_File("base.txt", '\n') << endl;
 
 }
 
 void ZE() {
-    ifstream fin;
-    fin.open("C:\\Users\\Admin\\source\\repos\\Tarasov_Igor_\\Tarasov_Igor_\\read.txt");
-    if (fin.is_open()) {
-        char buff[1024];
-    x:
-        fin >> buff;
-        for (int i = 0; i < strlen(buff); i++) {
-            cout << int(buff[i]) << " " << buff[i] << endl;
-            if (48 <= buff[i] and buff[i] <= 57) {
-                cout << buff[i] << endl;
-            }
+    string data = Read_File("read.txt");
+x:
+    for (int i = 0; i < data.length(); i++) {
+        if (48 <= data[i] and data[i] <= 57) {
+            cout << data[i];
         }
-        if (strlen(buff) != 0) {
-            goto x;
-        }
-        fin.close();
     }
-    else {
-        cout << "Error" << endl;
-    }
-    0;
 }
-
 void ZF() {
     int sizeArray;
     char temp;
@@ -516,19 +506,16 @@ void ZA2() {
     cout << "Знак числа = " << sigx(x) << endl;
 }
 
-float S_rectangle(float x,float y) {//Прямоугольник
-    float Pi = 3.14;
+double S_rectangle(float x,float y) {//Прямоугольник
     return x*y;
 }
 
-float S_triangle(float x, float y) {//Треугольник
-    float Pi = 3.14;
+double S_triangle(float x, float y) {//Треугольник
     return (x * y)/2;
 }
 
-float S_circle(float r) {//Прямоугольник
-    float Pi = 3.14;
-    return Pi*(r*r);
+double S_circle(float r) {//Прямоугольник
+    return pi*(r*r);
 }
 
 void ZA3() {
@@ -614,7 +601,22 @@ void ZA4() {
 }
 // Не хватает знанией для выполнения работы :
 void ZA5() {
-    0;
+    char sinx[15][20] = {'.'};
+
+    double l = 3 / 20;
+    int s = 0;
+    for (double i = -1; i <= 1; i += (static_cast<double>(3) / 20)) {
+        sinx[int(sin(i) * 15)][s] =' - ';
+        s += 1;
+        cout << sin(i)<< " "<< round(sin(i)*15)<<endl;
+    }
+    
+    for (int x = 0; x < 15 ;x++) {
+        for (int y = 0; y < 20; y++) {
+            cout << sinx[x][y] << " ";
+        }
+        cout << endl;
+    }
 }
 
 void ZA6() {
@@ -846,6 +848,7 @@ int main(int argc, wchar_t* argv[])
 {   
     //fix()
     setlocale(LC_ALL, "RUSSIAN");
+    ZA5();
     vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8,ZA9};
     vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция",L"Заем",L"Ссуда",L"Копирование файла",L"Фильтр",L"Сортировка букв",L"Файл",L"Знак числа",L"Геометрические фигуры",L"Былая слава (Осуждаю !!!)",L"Синусоида",L"Автоматный распознаватель",L"Генератор псевдослучайных чисел",L"Умножение матриц",L"Системы счисления"};
     menu(funcs, name_func);
