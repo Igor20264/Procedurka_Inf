@@ -51,9 +51,9 @@ x:
     int egg;
     wcout << L" Меню - Выбора задания " << endl;
     for (int i = 0; i < name_func.size(); i++) {
-        wcout << i+1 << " - " << name_func[i] << endl;
+        wcout<<"[" << i + 1 << "] \t" << name_func[i] << endl;
     }
-    wcout << 99 << " - " << L"Выход" << endl;
+    wcout <<"[" << 99<<"]" << " \t" << L"Выход" << endl;
     wcout << L"Выберите задание:";
     wcin >> egg;
     if(egg == 99) {
@@ -65,6 +65,7 @@ x:
             system("cls");
             funcs.at(egg-1)();
             cout << endl << " - - - - END - - - - " << endl;
+            system("pause");
             goto x;
         }
         catch (const exception&)
@@ -601,19 +602,39 @@ void ZA4() {
 }
 // Не хватает знанией для выполнения работы :
 void ZA5() {
-    char sinx[15][20] = {'.'};
+    int sinx[20][80] = { 0 };
 
-    double l = 3 / 20;
-    int s = 0;
-    for (double i = -1; i <= 1; i += (static_cast<double>(3) / 20)) {
-        sinx[int(sin(i) * 15)][s] =' - ';
-        s += 1;
-        cout << sin(i)<< " "<< round(sin(i)*15)<<endl;
+    double s = -(1/5);
+    for (int i = 0; i < 80; i ++) {
+        sinx[int((sin(s) * 10) + 10)][i] = {9};
+        s = s + (1.0/5);
+        cout << sin(s)<< " "<< round(sin(s)*20) << " "<< int(-(sin(s) * 10)+10) << endl;
     }
     
-    for (int x = 0; x < 15 ;x++) {
-        for (int y = 0; y < 20; y++) {
-            cout << sinx[x][y] << " ";
+
+
+    for (int x = 0; x < 20 ;x++) {
+        for (int y = 0; y < 80; y++) {
+            if (y == 0) {
+                cout << "- ";
+            }
+            else {
+                if (x == 10) {
+                    cout << "- ";
+                }
+                else {
+                    int h = sinx[x][y];
+                    if (h == 9) {
+                        cout << "\x1B[44m" << h << "\033[0m ";
+                    }
+                    else {
+                        cout << h << " ";
+                    }
+                }
+            }
+            
+            
+            
         }
         cout << endl;
     }
@@ -839,19 +860,142 @@ void ZAA() {
     cout << gcd(x, y) << " или " << gcn(x, y) << endl;  
 }
 
+bool is_es(long long n) {
+    for (long long i = 2; i <= sqrt(n); i++) {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+
 void ZAB() {
+    int gg[100];
+    int data;
+    data = int_input(L"Введите число >2: ");
+    if (data <= 2) {
+        cout << "Ошибка. Вы ввели число меньше 2-вух.";
+    }
+    else {
+        for (int i = 2; i < data; i++) {
+            if (is_es(i)) {
+                cout << i << endl;
+            }
+        }
+    }
+    
+}
+
+void ZAC(){ //24 Статическая обработка файла: поиск наименее часто встречающейся согласной буквы.
+    string data;
+    int l[9999] = {0};
+    int min_int = 10000;
+    char min_char = '.';
+    data = Read_File("read.txt");
+    for (int i = 0; i < data.length(); i++) {
+        l[int(data[i]) + 1000]++;
+    }
+    for (int i = 0; i < 9999; i++) {
+        char c = char(i - 1000);
+        if (0 < l[i]) {
+            if (0 < l[i] < min_int and
+
+                ((('a' <= c && c <= 'z') || ('а' <= c && c <= 'я') || ('A' <= c && c <= 'Z') || ('А' <= c && c <= 'Я'))
+                    and (!strchr("аоэиуыеёюяaeiouАОЭИУЫЕЁЮЯAEIOU", c)))) {
+                min_int = l[i];
+                min_char = c;
+            }
+        }
+        
+        
+    }
+    cout << "Меньше всего:" << min_char << " Повторяется:" << min_int << endl;
 
 }
+
+void print_mat(int array[]) {
+
+}
+int ten_to_x3(int Number, int Base) {
+    int chislo=Number;
+    int ostatok;
+    string data;
+    while (chislo > 0)
+    {
+        ostatok = chislo % 3;
+        chislo /= 3;
+        data.append(to_string(ostatok));
+    }
+    return stoi(data);
+}
+
+int cc_to_ten(int Number,int Base) {
+    int n=Number, a=Base; //a - cистема cчисления, n - вводимое число
+
+    cin >> n >> a;
+    int result = 0;
+    int cnt = 0;
+    while (n > 0)
+    {
+        result += n % 10 * pow(a, cnt++);
+        n /= 10;
+    }
+    return result;
+}
+vector<string> split(string arr, char separator = ' ') {
+    int i = 0;
+    vector<string> ret;
+    string s;
+    while (arr[i] != '\0') {
+        if (arr[i] != separator) {
+            s += arr[i];
+            
+        }
+        else {
+            ret.push_back(s);
+            s.clear();
+        }
+        i++;
+
+    }
+    return ret;
+}
+void ZAD() {//Задан массив F[1:n] из чисел в семеричной системе счисления. 
+    //В другом массиве организовать перевод исходного массива в троичную систему счисления
+    cout << "Введите числа через пробел:";
+    string temp,temp1;
+    cin >> temp1;
+    getline(cin,temp);
+    temp = temp1 + temp;
+    vector<string> l = split(temp);
+    vector<int> data;
+    int n = l.size();
+    int *array = new int[n];
+    for (int i = 0; i < l.size(); i++) {
+        for (int x = 0; x < l[i].length(); x++) {
+            if (6 < (int(l[i][x]) - 48)) {
+                cout << "Ошбика. Вы ввели не 7-ричную систему исчесления." << endl;
+                return;
+            }
+        }
+        array[i] = stoi(l[i]);
+    }
+    int* array_to_f = new int[n];
+    for (int i = 0; i < l.size(); i++) {
+        array_to_f[i] = ten_to_x3(cc_to_ten(array[i], 7),3);
+
+    }
+}
+
 // END DZ 5
 
 int main(int argc, wchar_t* argv[])
-{   
+{
     //fix()
     setlocale(LC_ALL, "RUSSIAN");
-    ZA5();
-    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8,ZA9};
-    vector< const wchar_t*> name_func{L"Имя",L"Арифметика",L"Уравнение",L"Еще уравнение",L"Лампа со шторой",L"Конус",L"Разветвление",L"Функция",L"Порядок",L"Табуляция",L"Заем",L"Ссуда",L"Копирование файла",L"Фильтр",L"Сортировка букв",L"Файл",L"Знак числа",L"Геометрические фигуры",L"Былая слава (Осуждаю !!!)",L"Синусоида",L"Автоматный распознаватель",L"Генератор псевдослучайных чисел",L"Умножение матриц",L"Системы счисления"};
-    menu(funcs, name_func);
+    ZAD();
+    vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8,ZA9,ZAA,ZAB,ZAC};
+    vector< const wchar_t*> name_func{L"1-1 Имя",L"1-2 Арифметика",L"1-3 Уравнение",L"1-4 Еще уравнение",L"1-5 Лампа со шторой",L"2-1 Конус",L"2-2 Разветвление",L"2-3 Функция",L"2-4 Порядок",L"2-5 Табуляция",L"3-1 Заем",L"3-2 Ссуда",L"3-3 Копирование файла",L"3-4 Фильтр",L"3-5 Сортировка букв",L"4-1 Файл",L"4-2 Знак числа",L"4-3 Геометрические фигуры",L"4-4 Былая слава (Осуждаю !!!)",L"4-5 Синусоида",L"4-6 Автоматный распознаватель",L"4-7 Генератор псевдослучайных чисел",L"4-8 Умножение матриц",L"4-9 Системы счисления",L"5-1 Алгоритм Евклида",L"5-2 Решето Эратосфена",L"5-3 Обработка текстовых файлов"};
+    //menu(funcs, name_func);
     
     return 0;
 }
