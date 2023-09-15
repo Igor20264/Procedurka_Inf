@@ -24,9 +24,4 @@
       <Filter>Исходные файлы</Filter>
     </Text>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Tarasov_Igor_.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>

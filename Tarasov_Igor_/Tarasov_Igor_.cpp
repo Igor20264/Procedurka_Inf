@@ -12,10 +12,10 @@
 #include <iomanip>
 #include <string>     // для getline
 #include <fstream>// Запись чтение файлов
-#include "Tarasov_Igor_.h"
 using namespace std;
 
 const double pi = 3.14;
+
 
 /*
 https://metanit.com/cpp/tutorial/7.4.php
@@ -38,6 +38,7 @@ double int_input(const wchar_t* text) {
     wcin >> x;
     return x;
 }
+
 
 //no com
 double gipot(double k1, double k2) {
@@ -195,6 +196,7 @@ void Z5() {
 // END DZ 1
 
 // DZ 2
+
 void Z6() {
     double R = 0.0, r = 0.0, V = 0.0, h = 0.0;
     R = int_input(L"Введите 1-ый радиус:");
@@ -306,9 +308,11 @@ void ZA() {
 err:
     0;
 }
+
 // END DZ 2
 
 // DZ 3
+
 void ZB() {
     double S, n, p, r, m;
     S = int_input(L"Введите занимаемую сумму S:");
@@ -448,9 +452,11 @@ void ZF() {
     cout << endl;
     0;
 }
+
 // END DZ 3
 
 // DZ 4
+
 void ZA1() {
     ofstream out;
     out.open("zadanie1.txt");
@@ -594,7 +600,7 @@ void ZA4() {
 
     
 }
-
+// Не хватает знанией для выполнения работы :
 void ZA5() {
     int sinx[20][80] = { 0 };
 
@@ -825,18 +831,16 @@ void ZA9() {
     reverse(l.begin(), l.end());
     cout << " - " << l;
 }
+
 // END DZ 4
 
-// DZ 5 Доп функции
-
-// Через рекурсию и деление
+// DZ 5
 int gcn(int a, int b) {
     if (b == 0)
         return a;
     return gcn(b, a % b);
 }
 
-// Через Цикл Вычитанием
 int gcd(int x, int y) {
     while (x != y) {
         if (x > y) {
@@ -849,69 +853,19 @@ int gcd(int x, int y) {
     return x;
 }
 
-// Проверяет простая ли функция
+void ZAA() {
+    double x, y;
+    x = int_input(L"Введите первое число:");
+    y = int_input(L"Введите второе число:");
+    cout << gcd(x, y) << " или " << gcn(x, y) << endl;  
+}
+
 bool is_es(long long n) {
     for (long long i = 2; i <= sqrt(n); i++) {
         if (n % i == 0)
             return false;
     }
     return true;
-}
-
-//перевод из 10 в 3-ичную систему
-int ten_to_x3(int Number, int Base) {
-    int chislo = Number;
-    int ostatok;
-    string data;
-    while (chislo > 0)
-    {
-        ostatok = chislo % 3;
-        chislo /= 3;
-        data.append(to_string(ostatok));
-    }
-    return stoi(data);
-}
-
-//перевод из N-ой системы в 10-ичную систему
-int cc_to_ten(int Number, int Base) {
-    int n = Number, a = Base;
-    int result = 0;
-    int cnt = 0;
-    while (n > 0)
-    {
-        result += n % 10 * pow(a, cnt++);
-        n /= 10;
-    }
-    return result;
-}
-
-// разделение по символу
-vector<string> split(string arr, char separator = ' ') {
-    int i = 0;
-    vector<string> ret;
-    string s;
-    while (arr[i] != '\0') {
-        if (arr[i] != separator) {
-            s += arr[i];
-
-        }
-        else {
-            ret.push_back(s);
-            s.clear();
-        }
-        i++;
-
-    }
-    return ret;
-}
-
-// DZ 5
-
-void ZAA() {
-    double x, y;
-    x = int_input(L"Введите первое число:");
-    y = int_input(L"Введите второе число:");
-    cout << gcd(x, y) << " или " << gcn(x, y) << endl;  
 }
 
 void ZAB() {
@@ -958,9 +912,56 @@ void ZAC(){ //24 Статическая обработка файла: поис�
 
 }
 
+void print_mat(int array[]) {
+
+}
+int ten_to_x3(int Number, int Base) {
+    int chislo=Number;
+    int ostatok;
+    string data;
+    while (chislo > 0)
+    {
+        ostatok = chislo % 3;
+        chislo /= 3;
+        data.append(to_string(ostatok));
+    }
+    return stoi(data);
+}
+
+int cc_to_ten(int Number,int Base) {
+    int n=Number, a=Base; //a - cистема cчисления, n - вводимое число
+
+    cin >> n >> a;
+    int result = 0;
+    int cnt = 0;
+    while (n > 0)
+    {
+        result += n % 10 * pow(a, cnt++);
+        n /= 10;
+    }
+    return result;
+}
+vector<string> split(string arr, char separator = ' ') {
+    int i = 0;
+    vector<string> ret;
+    string s;
+    while (arr[i] != '\0') {
+        if (arr[i] != separator) {
+            s += arr[i];
+            
+        }
+        else {
+            ret.push_back(s);
+            s.clear();
+        }
+        i++;
+
+    }
+    return ret;
+}
 void ZAD() {//Задан массив F[1:n] из чисел в семеричной системе счисления. 
     //В другом массиве организовать перевод исходного массива в троичную систему счисления
-    cout << "Введите числа в 7-ичной системе исчесления через пробел:";
+    cout << "Введите числа через пробел:";
     string temp,temp1;
     cin >> temp1;
     getline(cin,temp);
@@ -981,12 +982,10 @@ void ZAD() {//Задан массив F[1:n] из чисел в семеричн
     int* array_to_f = new int[n];
     for (int i = 0; i < l.size(); i++) {
         array_to_f[i] = ten_to_x3(cc_to_ten(array[i], 7),3);
+
     }
-    for (int i = 0; i < l.size(); i++) {
-        cout << array_to_f[i] << " ";
-    }
-    cout << "[3]" << endl;
 }
+
 // END DZ 5
 
 int main(int argc, wchar_t* argv[])
@@ -997,5 +996,6 @@ int main(int argc, wchar_t* argv[])
     vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8,ZA9,ZAA,ZAB,ZAC};
     vector< const wchar_t*> name_func{L"1-1 Имя",L"1-2 Арифметика",L"1-3 Уравнение",L"1-4 Еще уравнение",L"1-5 Лампа со шторой",L"2-1 Конус",L"2-2 Разветвление",L"2-3 Функция",L"2-4 Порядок",L"2-5 Табуляция",L"3-1 Заем",L"3-2 Ссуда",L"3-3 Копирование файла",L"3-4 Фильтр",L"3-5 Сортировка букв",L"4-1 Файл",L"4-2 Знак числа",L"4-3 Геометрические фигуры",L"4-4 Былая слава (Осуждаю !!!)",L"4-5 Синусоида",L"4-6 Автоматный распознаватель",L"4-7 Генератор псевдослучайных чисел",L"4-8 Умножение матриц",L"4-9 Системы счисления",L"5-1 Алгоритм Евклида",L"5-2 Решето Эратосфена",L"5-3 Обработка текстовых файлов"};
     //menu(funcs, name_func);
+    
     return 0;
 }
