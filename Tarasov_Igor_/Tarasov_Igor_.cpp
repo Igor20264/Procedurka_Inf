@@ -255,10 +255,10 @@ void Z8() {
     y = int_input(L"Введите y:");
     b = int_input(L"Введите b:");
     if ((b - y<=0)) {
-        wcout << L"Ошибка: log не принимает на вход 0, измените переменную y или b." << endl; goto err;
+        cout << "Ошибка: log не принимает на вход 0, измените переменную y или b." << endl; goto err;
     }
     z = log10(b - y) * sqrt(b - x);
-    wcout << L"z = " << z << endl;
+    cout << "z = " << z << endl;
 err:
     0;
 }
@@ -986,6 +986,9 @@ void ZAD() {//Задан массив F[1:n] из чисел в семеричн
     }
 }
 
+void ZAE(){
+
+}
 // END DZ 5
 
 int main(int argc, wchar_t* argv[])
