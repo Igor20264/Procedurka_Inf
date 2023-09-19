@@ -12,10 +12,119 @@
 #include <iomanip>
 #include <string>     // для getline
 #include <fstream>// Запись чтение файлов
-#include "Tarasov_Igor_.h"
+
+#include <windows.h> 
 using namespace std;
 
 const double pi = 3.14;
+
+bool random() {
+    int temp = rand() - rand();
+    if (abs(temp) == temp) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+char get_next_cell() {
+    if (random()) {
+        return '.';
+    }
+    return '|'; //стена 
+}
+
+string Creat_Map(int lens) {
+    string map = "..";
+    for (int i = map.length(); i < lens; i++) {
+        char cell = get_next_cell();
+        if (map[i - 1] == '|' and cell == '|') {
+            map = map + '.';
+        }
+        else {
+            map = map + cell;
+        }
+    }
+    return map;
+}
+
+bool chek(string map, int pl_pos) {
+    cout << endl << pl_pos << endl;
+    if (map[pl_pos] == '|') {
+        cout << map[pl_pos] << endl;
+        cout << "\nВы проиграли как лох!\n";
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+int main() {
+    setlocale(LC_ALL, "RUSSIAN");
+    bool running = true;
+    int score = 0;
+    int player_pos = 0;
+    string map = Creat_Map(300);
+    char pl_d;
+    int flag = 1;
+    while (running)
+    {
+        //cout << "\r"; 
+        cout << '@';
+        for (int i = player_pos + 1; i < player_pos + 10; i++) {
+            cout << map[i];
+        }
+        flag = 1;
+        while (flag) {
+            if (GetKeyState(0x4E) > 0) {
+                flag = 0;
+                pl_d = 'n';
+            }
+            if (GetKeyState(VK_SPACE) > 0) {
+                flag = 0;
+                pl_d = 's';
+            }
+        }
+
+        if (pl_d == 'n') {
+            player_pos++;
+        }
+        if (pl_d == 's') {
+            player_pos++;
+            player_pos++;
+        }
+        pl_d = ' ';
+        flag = 1;
+        running = chek(map, player_pos);
+        cout << endl;
+    }
+}
+
+class Matricx {
+    unsigned rows = 3;       // количество строк
+    unsigned columns = 2;    // количество столбцов
+private:
+    int** numbers{ new int* [rows] {} };
+
+public:
+    void init() {
+        for (int i = 0; i < rows; i++)
+        {
+            numbers[i] = new int[columns] {};
+        }
+    }
+    void delet() {// удаление массивов    
+        
+        for (unsigned i{}; i < rows; i++)
+        {
+            delete[] numbers[i];
+        }
+        delete[] numbers;
+    }
+
+};
 
 /*
 https://metanit.com/cpp/tutorial/7.4.php
@@ -1035,9 +1144,8 @@ int main(int argc, wchar_t* argv[])
     */
     //fix()
     setlocale(LC_ALL, "RUSSIAN");
-    ZAE();
     vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8,ZA9,ZAA,ZAB,ZAC,ZAD};
     vector< const wchar_t*> name_func{L"1-1 Имя",L"1-2 Арифметика",L"1-3 Уравнение",L"1-4 Еще уравнение",L"1-5 Лампа со шторой",L"2-1 Конус",L"2-2 Разветвление",L"2-3 Функция",L"2-4 Порядок",L"2-5 Табуляция",L"3-1 Заем",L"3-2 Ссуда",L"3-3 Копирование файла",L"3-4 Фильтр",L"3-5 Сортировка букв",L"4-1 Файл",L"4-2 Знак числа",L"4-3 Геометрические фигуры",L"4-4 Былая слава (Осуждаю !!!)",L"4-5 Синусоида",L"4-6 Автоматный распознаватель",L"4-7 Генератор псевдослучайных чисел",L"4-8 Умножение матриц",L"4-9 Системы счисления",L"5-1 Алгоритм Евклида",L"5-2 Решето Эратосфена",L"5-3 Обработка текстовых файлов",L"5-4 Ряды"};
-    //menu(funcs, name_func);
+    menu(funcs, name_func);
     return 0;
 }
