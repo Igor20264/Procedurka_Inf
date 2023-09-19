@@ -1007,7 +1007,7 @@ void ZAE(){
             cout << medals[i];
             cout << medals[i] ->size() << " ";
         }
-        
+0        
         if (medals[i]->length() != 3) {
             cout << "Ошибка. Вы ввели не 3 типа медалей";
             return;
