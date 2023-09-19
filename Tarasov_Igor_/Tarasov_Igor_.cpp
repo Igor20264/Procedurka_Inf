@@ -282,7 +282,7 @@ void Z4() {
     if (d < 0) // Условие при дискриминанте меньше нуля
         wcout << "D < 0, Sqrt not exist";
 x:
-    int x;
+    0;
 }
 
 void Z5() {
@@ -309,8 +309,8 @@ void Z6() {
     R = int_input(L"Введите 1-ый радиус:");
     r = int_input(L"Введите 2-ой радиус:");
     h = int_input(L"Введите Высоту:");
-    float S = 0;
-    float l = gipot((R - r), h);
+    double S = 0;
+    double l = gipot((R - r), h);
     if (r == R) {
         cout << "Ошибка: Радиусы равны, Это цилиндр" << endl;
         goto end;
@@ -362,10 +362,10 @@ void Z8() {
     y = int_input(L"Введите y:");
     b = int_input(L"Введите b:");
     if ((b - y<=0)) {
-        wcout << L"Ошибка: log не принимает на вход 0, измените переменную y или b." << endl; goto err;
+        cout << "Ошибка: log не принимает на вход 0, измените переменную y или b." << endl; goto err;
     }
     z = log10(b - y) * sqrt(b - x);
-    wcout << L"z = " << z << endl;
+    cout << "z = " << z << endl;
 err:
     0;
 }
@@ -376,7 +376,8 @@ void Z9() {
     cout << "Введите x:";
     cin >> x;
     for (int i = 0; i <= x.size(); i++) {
-        if (57 <= int(x[i]) or int(x[i]) <= 48) {
+        cout << int(x[i]) << " " << x[i] << endl;;
+        if ((57 < int(x[i]) or int(x[i]) < 48) and int(x[i]) != 0) {
             cout << "Ошибка. Вы ввели число с точкой или буквой ";
             okey = false;
             break;
@@ -390,9 +391,6 @@ void Z9() {
             wcout << i << endl;
         }
     }
-
-err:
-    0;
 }
 // А потому что в 16 ричной системе исчесления это 10, а Z - задание, я знаю что считаю не с нуля...
 void ZA() {
@@ -412,8 +410,6 @@ void ZA() {
        
         //wcout << L"x = " << x << L" \t| y = " << y << endl;
     }
-err:
-    0;
 }
 // END DZ 2
 
@@ -521,7 +517,6 @@ void ZD() {
 
 void ZE() {
     string data = Read_File("read.txt");
-x:
     for (int i = 0; i < data.length(); i++) {
         if (48 <= data[i] and data[i] <= 57) {
             cout << data[i];
@@ -591,7 +586,7 @@ void ZA1() {
     }
 }
 
-char sigx(double x) {
+char sigx(long x) {
     if (x == 0) {
         return '0';
     }
@@ -1002,7 +997,6 @@ vector<string> split(string arr, char separator = ' ') {
     while (arr[i] != '\0') {
         if (arr[i] != separator) {
             s += arr[i];
-
         }
         else {
             ret.push_back(s);
@@ -1010,6 +1004,9 @@ vector<string> split(string arr, char separator = ' ') {
         }
         i++;
 
+    }
+    if (arr.length() > 0) {
+        ret.push_back(s);
     }
     return ret;
 }
@@ -1095,6 +1092,45 @@ void ZAD() {//Задан массив F[1:n] из чисел в семеричн
         cout << array_to_f[i] << " ";
     }
     cout << "[3]" << endl;
+}
+
+vector<string> input(string text,string text1) {
+    cout << text << text1;
+    string temp, temp1;
+    cin >> temp1;
+    getline(cin, temp);
+    temp = temp1 + temp;
+    vector<string> l = split(temp);
+    return l;
+}
+
+void ZAE(){
+    string medals[10][3];
+    vector<string> country = {"Германия","Новергия","Россия","Австрия","Канада","США","Финлядия","Япония","Китай","Корея"};
+    cout << "Страна | Медали (через пробел)" << endl;
+    for (int i = 0; i < 10; i++) {
+        vector<string> data = input(country[i], ":");
+        //ошбика ниже
+        for (int x = 0; x < 3; x++) {
+            medals[i][x].append(data[x]);
+            cout << medals[i];
+            cout << medals[i] ->size() << " ";
+        }
+        
+        if (medals[i]->length() != 3) {
+            cout << "Ошибка. Вы ввели не 3 типа медалей";
+            return;
+        }
+    }
+    int array[10][3];
+    for (int i = 0; i < 10; i++) {
+        for (int x = 0; x < 3; x++) {
+            array[i][x] = stoi(medals[i][x]);
+            cout << array[i][x];
+        }
+        cout << endl;
+    }
+
 }
 // END DZ 5
 
