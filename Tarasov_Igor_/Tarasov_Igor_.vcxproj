@@ -130,10 +130,8 @@
     <ClCompile Include="Tarasov_Igor_.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="cppstudio.txt" />
     <Text Include="Текст.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Tarasov_Igor_.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

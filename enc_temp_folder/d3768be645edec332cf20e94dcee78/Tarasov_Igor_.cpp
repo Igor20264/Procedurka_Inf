@@ -376,7 +376,7 @@ void ZC() {
         rTemp = rTemp + 0.0001;
     }
 
-    cout << "p = " << round(r * 100) << "%" << endl;
+    cout << "p = " << r * 100 << "%" << endl;
 
 }
 

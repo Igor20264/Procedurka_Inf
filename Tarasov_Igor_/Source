@@ -1,0 +1,89 @@
+
+#include <fstream>
+#include <windows.h> 
+using namespace std;
+
+bool random() {
+    int temp = rand() - rand();
+    if (abs(temp) == temp) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+char get_next_cell() {
+    if (random()) {
+        return '.';
+    }
+    return '|'; //стена 
+}
+
+string Creat_Map(int lens) {
+    string map = "..";
+    for (int i = map.length(); i < lens; i++) {
+        char cell = get_next_cell();
+        if (map[i - 1] == '|' and cell == '|') {
+            map = map + '.';
+        }
+        else {
+            map = map + cell;
+        }
+    }
+    return map;
+}
+
+bool chek(string map, int pl_pos) {
+    cout << endl << pl_pos << endl;
+    if (map[pl_pos] == '|') {
+        cout << map[pl_pos] << endl;
+        cout << "\nВы проиграли как лох!\n";
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
+int game() {
+    setlocale(LC_ALL, "RUSSIAN");
+    bool running = true;
+    int score = 0;
+    int player_pos = 0;
+    string map = Creat_Map(300);
+    char pl_d;
+    int flag = 1;
+    while (running)
+    {
+        //cout << "\r"; 
+        cout << '@';
+        for (int i = player_pos + 1; i < player_pos + 10; i++) {
+            cout << map[i];
+        }
+        flag = 1;
+        while (flag) {
+            if (GetKeyState(0x4E) > 0) {
+                flag = 0;
+                pl_d = 'n';
+            }
+            if (GetKeyState(VK_SPACE) > 0) {
+                flag = 0;
+                pl_d = 's';
+            }
+        }
+
+        if (pl_d == 'n') {
+            player_pos++;
+        }
+        if (pl_d == 's') {
+            player_pos++;
+            player_pos++;
+        }
+        pl_d = ' ';
+        flag = 1;
+        running = chek(map, player_pos);
+        cout << endl;
+    }
+    return 1;
+}
