@@ -415,7 +415,10 @@ error:
 }
 
 void ZD() {
-    Write_file("cppstudio.txt", "Работа с файлами в С++.");
+    string data;
+    cout << "Введите данные:";
+    cin >> data;
+    Write_file("cppstudio.txt", data);
     cout << Read_File("cppstudio.txt", '\n') << endl;
 }
 
@@ -439,34 +442,47 @@ char gen_char() {
     }
 }
 
+bool isSorted(string a)
+{   
+    int n = a.length();
+    while (--n > 0)
+        if (int(a[n]) < int(a[n - 1]))
+            return false;
+    return true;
+}
+
+// To generate permutation of the array
+string shuffle(string a)
+{
+    for (int i = 0; i < a.length(); i++)
+        swap(a[i], a[rand() % a.length()]);
+    return a;
+}
+
+string bogosort(string a)
+{   
+    string temp;
+    while (!isSorted(a))
+        a = shuffle(a);
+    return a;
+}
+
 void ZF() {
     int sizeArray;
     char temp;
-    //string alfavit = "ЯwpMQqlLXoSWgVijBHDzkeOusYICtEK";//30
     string alfavit;
-    for (int i = 0; i < 90; i=i+1) {
+    for (int i = 0; i < 10; i=i+1) {
         char chars = gen_char();
         alfavit += chars;
     }
     cout << endl;
-    //sort(alfavit.begin(), alfavit.end());
-    //cout << alfavit;
     bool s=false;
-    //wcout << "Введите Строку: " << endl; cin >> alfavit;
-    alfavit.erase(remove_if(alfavit.begin(), alfavit.end(), std::isspace), alfavit.end());
+    alfavit.erase(remove_if(alfavit.begin(), alfavit.end(), std::isspace), alfavit.end()); //удаление пробелов
     sizeArray = alfavit.length();
     cout << sizeArray << " Букв в сортировке." << endl;
     cout << "ДО  \t|" << alfavit << "\nПОСЛЕ\t|";
-    for (int i = 1; i < sizeArray; i++)
-        for (int j = 0; j < sizeArray - i; j++)
-        {
-            if (alfavit[j + 1]+1000 > alfavit[j]+1000)
-            {
-                temp = alfavit[j];
-                alfavit[j] = alfavit[j + 1];
-                alfavit[j + 1] = temp;
-            }
-        }
+    
+    alfavit = bogosort(alfavit);
 
     for (int i = sizeArray - 1; i >= 0; i--)
         cout << alfavit[i]; // вывод
@@ -478,34 +494,23 @@ void ZF() {
 
 // DZ 4
 void ZA1() {
-    ofstream out;
-    out.open("zadanie1.txt");
-
-    if (out.is_open()) {
-        int data;
-        for (int i = 0; i < 10; i++) {
-            cout << "| Осталось "<< 9-i <<" |\t " << "Введите число для записи в файл:";
-            cin >> data;
-            out << data << endl;
-        }
+    ofstream out("zadanie1.txt");
+    int data;
+    for (int i = 0; i < 10; i++) {
+        cout << "| Осталось "<< 9-i <<" |\t " << "Введите число для записи в файл:";
+        cin >> data;
+        out << data << endl;
     }
-    else {
-        cout << "ERROR WRITE FILE" << endl;
-    }
-    out.close();
-
+    // - - - - - - - - - - - - - - - - - - - - - - - -
     string line;
-    ifstream in;
+    ifstream in("zadanie1.txt");
     long int sum_m = 0;
     double temp;
-    in.open("zadanie1.txt");
-    if (in.is_open()) {
-        while (getline(in, line)) {
-            temp = atof(line.c_str());
-            sum_m += temp;
-        }
-        cout << "Сумма чисел в файле = " << sum_m << endl;
+    while (getline(in, line)) {
+        temp = atof(line.c_str());
+        sum_m += temp;
     }
+    cout << "Сумма чисел в файле = " << sum_m << endl;
 }
 
 char sigx(long x) {
@@ -543,8 +548,7 @@ void ZA3() {
     double x1, y1, x2, y2, r;
     int in;
     cout << "Выберите фигуру [1 - Прямоугольник | 2 - Треугольник | 3 - Круг]:"; cin >> in;
-    switch (in)
-    {case 1:
+    if (in == 1) {
         x1 = int_input(L"Введите Ширину Прямоугольника:");
         y1 = int_input(L"Введите Высоту Прямоугольника:");
         if (x1 <= 0 or y1 <= 0) {
@@ -553,7 +557,8 @@ void ZA3() {
         else {
             cout << "Площадь прямоугольника. S = " << S_rectangle(x1, y1) << endl;
         }
-    case 2:
+    }
+    else if (in == 2) {
         y2 = int_input(L"Введите Ширину Основания Треугольника:");
         x2 = int_input(L"Введите Высоту Треугольника:");
         if (x2 <= 0 or y2 <= 0) {
@@ -562,7 +567,8 @@ void ZA3() {
         else {
             cout << "Площадь Треугольника. S = " << S_triangle(x2, y2) << endl;
         }
-    case 3:
+    }
+    else if (in == 3) {
         r = int_input(L"Введите Радиус круга:");
 
 
@@ -572,9 +578,9 @@ void ZA3() {
         else {
             cout << "Площадь круга. S = " << S_circle(r) << endl;
         }
-    default:
+    }
+    else {
         cout << "Такого варианта нету. Ошибка." << endl;
-        break;
     }
 }
  
@@ -634,30 +640,30 @@ void ZA4() {
 }
 
 void ZA5() {
-    int sinx[40][80] = { 0 };
-    int l = 10;
+    int sinx[30][110] = { 0 };
+    int l = 15;
     double s = -(1/l);
-    for (int i = 0; i < 80; i ++) {
-        sinx[int(((cos(s)+sin(s)) * 20) + 20)][i] = {9};
+    for (int i = 0; i < 110; i ++) {
+        sinx[int(((sin(s)) * 15+15))][i] = {9};
         s = s + (1.0/l);
     }
 
-    for (int x = 0; x < 40 ;x++) {
-        for (int y = 0; y < 80; y++) {
+    for (int x = 0; x < 30 ;x++) {
+        for (int y = 0; y < 110; y++) {
             if (y == 0) {
-                cout << "- ";
+                cout << "\x1B[45m" << "|" << "\033[0m";
             }
             else {
-                if (x == 20) {
-                    cout << "- ";
+                if (x == 15) {
+                    cout << "\x1B[45m" << "-" << "\033[0m";
                 }
                 else {
                     int h = sinx[x][y];
                     if (h == 9) {
-                        cout << "\x1B[44m" << "0" << "\033[0m ";
+                        cout << "\x1B[44m" << " " << "\033[0m";
                     }
                     else {
-                        cout << h << " ";
+                        cout << " ";
                     }
                 }
             }
@@ -669,7 +675,7 @@ void ZA5() {
     }
 }
 
-void ZA6() {
+void ZA6() { // https://www.graecolatini.by/htm-different/num-converter-roman.htm
     string data;
     cout << "Введите число в римской системе исчесления: ";
     cin >> data;
@@ -728,6 +734,7 @@ void ZA6() {
     }
     
 }
+
 int gen(int m, int b, int c ,long long int n) {
     int s = 0;
     for (int i = 1; i <= n; i++) {
@@ -830,10 +837,79 @@ int n_to_ten(char data) {
 
 }
 
+
+int char_to_int(char symbol) {
+    switch (symbol) {
+    case '0': return 0; break;
+    case '1': return 1; break;
+    case '2': return 2; break;
+    case '3': return 3; break;
+    case '4': return 4; break;
+    case '5': return 5; break;
+    case '6': return 6; break;
+    case '7': return 7; break;
+    case '8': return 8; break;
+    case '9': return 9; break;
+    case 'A': return 10; break;
+    case 'B': return 11; break;
+    case 'C': return 12; break;
+    case 'D': return 13; break;
+    case 'E': return 14; break;
+    case 'F': return 15; break;
+    }
+    return -1;
+}
+
+
+string int_to_char(int symbol) {
+    switch (symbol) {
+    case 0: return "0"; break;
+    case 1: return "1"; break;
+    case 2: return "2"; break;
+    case 3: return "3"; break;
+    case 4: return "4"; break;
+    case 5: return "5"; break;
+    case 6: return "6"; break;
+    case 7: return "7"; break;
+    case 8: return "8"; break;
+    case 9: return "9"; break;
+    case 10: return "A"; break;
+    case 11: return "B"; break;
+    case 12: return "C"; break;
+    case 13: return "D"; break;
+    case 14: return "E"; break;
+    case 15: return "F"; break;
+    }
+    return "";
+}
+
+
+long long funTenCC(string line, int base_num = 2) { // перевод в 10 с.с.
+    long long new_x = 0; // полученное число в 10 с.с.
+
+    for (int i = 0; i < line.length(); i++) { // пробегание по всем цифрам
+        int symbol = char_to_int(line[i]); // конвертированный символ в цифру
+        cout << symbol << endl;
+        new_x += symbol * pow(base_num, line.length() - i - 1); // запись в число цифры line[i]
+    }
+    cout << new_x << endl;
+    return new_x;
+}
+
+
+string funNewCC(int num, int base_num = 2) { // перевод в нужную с.с.
+    string new_x = int_to_char(num % base_num);
+    cout << new_x << endl;
+    if (num > 0) {
+        return funNewCC(num / base_num) + new_x;
+    }
+    return new_x;
+}
+
+
 void ZA9() {
     string data;
-    int all=0;
-    int osnov_old=10,osnov_nev;
+    int osnov_old=16,osnov_nev=10;
 
     cout << "Введите исходное число: ";
     cin >> data;
@@ -841,24 +917,16 @@ void ZA9() {
     cin >> osnov_old;
     cout << "Введите новое основание (число): ";
     cin >> osnov_nev;
-    for (int i = 0; i < data.size(); i++) {
-        all += n_to_ten(data[data.size() - 1 - i]) * int(pow(osnov_old, i));
-    }
 
-    string l;
-    int i = 0;
-    while (all > osnov_nev) {
-       // cout << all % osnov_nev << endl;
-        l += to_string(all % osnov_nev);
-        all = all/osnov_nev;
-        i++;
+    int num = funTenCC(data, osnov_old);
+    if (osnov_nev == 10) {
+        cout << "Число в 10 системе: " << num << endl;
     }
-    if (all == osnov_nev) {
-        l += '0';
-        l += '1';
+    else {
+        cout << "Число в 10 системе:" << num << endl;
+        cout << "Число в n ричной" << funNewCC(num, osnov_nev) << endl;
     }
-    reverse(l.begin(), l.end());
-    cout << " - " << l;
+    
 }
 // END DZ 4
 
@@ -1075,10 +1143,10 @@ int main(int argc, wchar_t* argv[])
     //fix()
     setlocale(LC_ALL, "RUSSIAN");
 
-    //ZA5();
+    ZA9();
     //system("pause");
     vector<void(*)()> funcs {Z1,Z2,Z3,Z4,Z5,Z6,Z7,Z8,Z9,ZA,ZB,ZC,ZD,ZE,ZF,ZA1,ZA2,ZA3,ZA4,ZA5,ZA6,ZA7,ZA8,ZA9,ZAA,ZAB,ZAC,ZAD};
     vector< const wchar_t*> name_func{L"1-1 Имя",L"1-2 Арифметика",L"1-3 Уравнение",L"1-4 Еще уравнение",L"1-5 Лампа со шторой",L"2-1 Конус",L"2-2 Разветвление",L"2-3 Функция",L"2-4 Порядок",L"2-5 Табуляция",L"3-1 Заем",L"3-2 Ссуда",L"3-3 Копирование файла",L"3-4 Фильтр",L"3-5 Сортировка букв",L"4-1 Файл",L"4-2 Знак числа",L"4-3 Геометрические фигуры",L"4-4 Былая слава (Осуждаю !!!)",L"4-5 Синусоида",L"4-6 Автоматный распознаватель",L"4-7 Генератор псевдослучайных чисел",L"4-8 Умножение матриц",L"4-9 Системы счисления",L"5-1 Алгоритм Евклида",L"5-2 Решето Эратосфена",L"5-3 Обработка текстовых файлов",L"5-4 Ряды"};
-    menu(funcs, name_func);
+    //menu(funcs, name_func);
     return 0;
 }
